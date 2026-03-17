@@ -409,7 +409,7 @@ input[type='range']::-webkit-slider-thumb:hover {
     box-shadow: 0 4px 15px rgba(90, 102, 241, 0.4);
 }
 
-.btn-primary:hover {
+.btn-primary:hover:not(:disabled) {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(99, 102, 241, 0.6);
 }
@@ -420,7 +420,7 @@ input[type='range']::-webkit-slider-thumb:hover {
     box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
 }
 
-.btn-secondary:hover {
+.btn-secondary:hover:not(:disabled) {
     transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
 }
@@ -431,7 +431,79 @@ input[type='range']::-webkit-slider-thumb:hover {
     box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
 }
 
-.btn-tertiary:hover {
+.btn-tertiary:hover:not(:disabled) {
     transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
+}
+.action-btn.processing
+{
+    pointer-events: none;
+}
+.spinner
+{
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+.progress-container
+{
+    display: none;
+    margin-top: 1rem;
+}
+.progress-container.active
+{
+    display: block;
+}
+.progress-bar
+{
+    height: 8px;
+    background: var(--surface-light);
+    overflow: hidden;
+    position: relative;
+    border-radius: 4px;   
+}
+.progress-fill
+{
+    height: 100%;
+    background: var(--gradient-1);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+.progress-fill::after
+{
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3),transparent);
+    animation: shimmer 1.5s infinite;
+}
+@keyframes shimmer {
+    0%
+    {
+        transform: translateX(-100%);
+    }
+    100%{
+        transform: translateX(100%);
+    }
+}
+.progress-text
+{
+    margin-top: 0.5rem;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+.results
+{
+    
 }
