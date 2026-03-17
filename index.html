@@ -14,11 +14,11 @@
     <title>Universal File Converter</title>
 </head>
 <body>
-    <div id="bg-animation"></div>
+    <div class="bg-animation"></div>
 
     <header>
         <div class="logo">
-            <div class="logo-icon">🎊</div>
+            <div class="logo-icon">📃</div>
             <p>Universal File Converter</p>
         </div>
         <p class="subtitle">Convert between PDF, JPG, PNG and more. All processing happens locally in your browser-your files never leaves your device.</p>
@@ -141,47 +141,66 @@
                         <div class="tool-description">Combine Images into single pdf</div>
                     </div>
                 </div>
-                <div class="upload-zone" id="imagesToPdfUploadZone">
-                    <input type="file" id="pdfToImageInput" accept=".pdf">
-                    <div class="upload-icon">📄</div>
-                    <div class="upload-next">Drop PDf file here or click to browse</div>
-                    <div class="upload-hin">Convert each page for image formate</div>
+                <div class="upload-zone" id="imagesToPdfZone">
+                    <input type="file" id="imagesToPdfInput" accept="images/*" multiple>
+                    <div class="upload-icon">🖼️</div>
+                    <div class="upload-next">Drop images here or click to browse</div>
+                    <div class="upload-hin">Select Multiple images to merge</div>
                 </div>
 
-                <div class="file-preview" id="pdfToImagePreview">
-                    <div id="imagePreviewList"></div>
+                <div class="file-preview" id="imageToPdfPreview">
+                    <div id="imagesToPdfList"></div>
                 </div>
 
-                <div class="controls" id="pdfToImageControls" style="display: none;">
-                    <div class="formate-selector">
-                        <button class="formate-btn active" data-format="png">PNG</button>
-                        <button class="formate-btn" data-format="jpg">JPG</button>
-                    </div>
-
-                    <div class="quality-control">
-                        <label>Scale</label>
-                        <div class="slider-container">
-                            <input type="range" id="pdfScaleSlider" min="1" max="3" value="1.5" step="0.5">
-                            <span class="quality-value" id="pdfScaleValue">1.5x</span>
+                <div class="controls" id="imageToPdfControls" style="display: none;">
+                    <div class="qualityControls">
+                        <label>Page Size</label>
+                        <div class="formate-selector" style="flex: 1;">
+                            <button class="formate-btn active" data-format="a4">A4</button>
+                            <button class="formate-btn" data-format="latter">latter</button>
+                            <button class="formate-btn" data-format="original">Original</button>
                         </div>
                     </div>
 
-                    <button class="action-btn btn-primary" id="convertPdfBtn">
-                        <span>Extract Images</span>
+                    <button class="action-btn btn-tertiary" id="createPdfBtn">
+                        <span>Create PDF</span>
                     </button>
                 </div>
 
-                <div class="progress-container" id="pdfToImageProgress">
+                <div class="progress-container" id="imageToPdfProgress">
                     <div class="progress-bar">
-                        <div class="progress-fill" id="pdfToImageProgressText" style="width: 0%;"></div>
+                        <div class="progress-fill" id="imageToPdfProgressFill" style="width: 0%;"></div>
                     </div>
-                    <div class="progress-text" id="imageProgressText">Processing... 0%</div>
+                    <div class="progress-text" id="imageToPdfProgressText">Creating PDF... 0%</div>
                 </div>
-
-                <div class="results" id="pdfToImageResults"></div>
+                <div class="results" id="imageToPdfResults"></div>
              </div>
-
         </div>
-    </div>
+        <!-- Features Section -->
+         <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <div class="feature-title">100% Private</div>
+                <div class="desc">All processing happens locally in your browser. Your files are never uploaded to server.</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡️</div>
+                <div class="feature-title">Lightning Fast</div>
+                <div class="desc">Utilizes modern browser APIs for high-performance conversion without waiting.</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">➡️</div>
+                <div class="feature-title">Completely Free</div>
+                <div class="desc">No. Watermarks, no limits, no registration required. Used it as much as your need.</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <div class="feature-title">Work Everywhere</div>
+                <div class="desc">Responsive design work on desktop, tablet, and mobile devices seamleasly.</div>
+            </div>
+         </div>
+        </div>
+        <div class="toast-container" id="toastContainer"></div>
+        <script src="script.js"></script>
 </body>
 </html>
