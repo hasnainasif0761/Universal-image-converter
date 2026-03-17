@@ -102,4 +102,53 @@ header
     right: 0;
     height: 4px;
     background: var(--gradient-1);
+    transform: scaleX(0);
+    transition: transform 0.5s ease;
+}
+.tool-card:hover
+{
+    transform: translateY(-5px);
+    border-color: rgba(99,102,241,0.5);
+    box-shadow: 0px 20px 40px rgba(0,0,0,0.4);
+}
+.tool-card:hover::before
+{
+    transform: scaleX(1);
+}
+.tool-card.image-converter::before
+{
+    background: var(--gradient-2);
+}
+.tool-card.pdf-creater::before
+{
+    background: var(--gradient-3);
+}
+.tool-header
+{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+.tool-icon
+{
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+    background: var(--gradient-1);
+    box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+    padding-left: 10px;
+}
+.image-converter.tool-icon
+{
+    background: var(--gradient-2);
+    box-shadow: 0 10px 20px rgba(236,72,153,0.3);
+}
+.pdf-creater
+{
+    
 }
