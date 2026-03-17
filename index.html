@@ -6,6 +6,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link
+  href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css"
+  rel="stylesheet"
+/>
     <link rel="stylesheet" href="style.css">
     <title>Universal File Converter</title>
 </head>
@@ -20,7 +24,164 @@
         <p class="subtitle">Convert between PDF, JPG, PNG and more. All processing happens locally in your browser-your files never leaves your device.</p>
     </header>
 
+    <div class="container">
+        <div class="tools-grid">
+            <!-- Image Converter -->
+             <div class="tool-card image-converter">
+                <div class="tool-header">
+                    <div class="tool-icon">🖼️</div>
+                    <div>
+                        <div class="tool-title">Image Converter</div>
+                        <div class="tool-description">JPG <i class="ri-expand-horizontal-line"></i> PNG and Webp and more...</div>
+                    </div>
+                </div>
+                <div class="upload-zone" id="imageUploadZone">
+                    <input type="file" id="imageInput" accept="image/*" multiple>
+                    <div class="upload-icon">📁</div>
+                    <div class="upload-next">Drop Images here or click to browse</div>
+                    <div class="upload-hin">Supports JPG , PNG , Webp , GIF , BMP</div>
+                </div>
 
-    
+                <div class="file-preview" id="imagePreview">
+                    <div id="imagePreviewList"></div>
+                </div>
+
+                <div class="controls" id="imageControls" style="display: none;">
+                    <div class="formate-selector">
+                        <button class="formate-btn active" data-format="png">PNG</button>
+                        <button class="formate-btn" data-format="jpg">JPG</button>
+                        <button class="formate-btn" data-format="webp">WebP</button>
+                        <button class="formate-btn" data-format="bmp">BMP</button>
+                    </div>
+
+                    <div class="quality-control">
+                        <label>Quality</label>
+                        <div class="slider-container">
+                            <input type="range" id="qualitySlider" min="1" max="100" value="90">
+                            <span class="quality-value" id="qualityValue">90%</span>
+                        </div>
+                    </div>
+
+                    <button class="action-btn btn-secondary" id="convertImagesBtn">
+                        <span>Convert Images</span>
+                    </button>
+                </div>
+
+                <div class="progress-container" id="imageProgress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="imageProgressFill" style="width: 0%;"></div>
+                    </div>
+                    <div class="progress-text" id="imageProgressText">Converting... 0%</div>
+                </div>
+
+                <div class="results" id="imageResults">
+                    <div class="result-grid" id="imageResultGrid"></div>
+                    <button class="dowload-all-btn" id="dowloadAllImages">
+                        <span>⬇️</span> Download All
+                    </button>
+                </div>
+             </div>
+
+             <!-- Pdf to Image -->
+                <div class="tool-card">
+                <div class="tool-header">
+                    <div class="tool-icon">📄 ➡️ 🖼️</div>
+                    <div>
+                        <div class="tool-title">PDF to Images</div>
+                        <div class="tool-description">Extract pages as JPG/PNG</div>
+                    </div>
+                </div>
+                <div class="upload-zone" id="pdfUploadZone">
+                    <input type="file" id="pdfToImageInput" accept=".pdf">
+                    <div class="upload-icon">📄</div>
+                    <div class="upload-next">Drop PDf file here or click to browse</div>
+                    <div class="upload-hin">Convert each page for image formate</div>
+                </div>
+
+                <div class="file-preview" id="pdfToImagePreview">
+                    <div id="imagePreviewList"></div>
+                </div>
+
+                <div class="controls" id="pdfToImageControls" style="display: none;">
+                    <div class="formate-selector">
+                        <button class="formate-btn active" data-format="png">PNG</button>
+                        <button class="formate-btn" data-format="jpg">JPG</button>
+                    </div>
+
+                    <div class="quality-control">
+                        <label>Scale</label>
+                        <div class="slider-container">
+                            <input type="range" id="pdfScaleSlider" min="1" max="3" value="1.5" step="0.5">
+                            <span class="quality-value" id="pdfScaleValue">1.5x</span>
+                        </div>
+                    </div>
+
+                    <button class="action-btn btn-primary" id="convertPdfBtn">
+                        <span>Extract Images</span>
+                    </button>
+                </div>
+
+                <div class="progress-container" id="pdfToImageProgress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="pdfToImageProgressText" style="width: 0%;"></div>
+                    </div>
+                    <div class="progress-text" id="imageProgressText">Processing... 0%</div>
+                </div>
+
+                <div class="results" id="pdfToImageResults"></div>
+             </div>
+
+             <!-- Images to PDF -->
+
+              <div class="tool-card">
+                <div class="tool-header pdf-creater">
+                    <div class="tool-icon">🖼️ ➡️ 📃</div>
+                    <div>
+                        <div class="tool-title">Image to Pdf</div>
+                        <div class="tool-description">Combine Images into single pdf</div>
+                    </div>
+                </div>
+                <div class="upload-zone" id="imagesToPdfUploadZone">
+                    <input type="file" id="pdfToImageInput" accept=".pdf">
+                    <div class="upload-icon">📄</div>
+                    <div class="upload-next">Drop PDf file here or click to browse</div>
+                    <div class="upload-hin">Convert each page for image formate</div>
+                </div>
+
+                <div class="file-preview" id="pdfToImagePreview">
+                    <div id="imagePreviewList"></div>
+                </div>
+
+                <div class="controls" id="pdfToImageControls" style="display: none;">
+                    <div class="formate-selector">
+                        <button class="formate-btn active" data-format="png">PNG</button>
+                        <button class="formate-btn" data-format="jpg">JPG</button>
+                    </div>
+
+                    <div class="quality-control">
+                        <label>Scale</label>
+                        <div class="slider-container">
+                            <input type="range" id="pdfScaleSlider" min="1" max="3" value="1.5" step="0.5">
+                            <span class="quality-value" id="pdfScaleValue">1.5x</span>
+                        </div>
+                    </div>
+
+                    <button class="action-btn btn-primary" id="convertPdfBtn">
+                        <span>Extract Images</span>
+                    </button>
+                </div>
+
+                <div class="progress-container" id="pdfToImageProgress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="pdfToImageProgressText" style="width: 0%;"></div>
+                    </div>
+                    <div class="progress-text" id="imageProgressText">Processing... 0%</div>
+                </div>
+
+                <div class="results" id="pdfToImageResults"></div>
+             </div>
+
+        </div>
+    </div>
 </body>
 </html>
