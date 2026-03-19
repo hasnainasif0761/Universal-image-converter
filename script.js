@@ -1,3 +1,4 @@
+document.addEventListener('DOMContentLoaded',()=>{
 const state = {
     imageFiles: [],
     pdfToImageFile: null,
@@ -39,7 +40,7 @@ function formatFileSize(bytes){
     const k = 1024;
     const size = ['bytes','KB','MB','GB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k,i)).toFixed(2) + '' + size[i])
+    return (bytes / Math.pow(k,i)).toFixed(2) + '' + size[i]
 }
 
 function setButtonLoading(btn, loading = 'true'){
@@ -67,11 +68,12 @@ const quantitySlider = document.getElementById('qualitySlider');
 const qualityValue = document.getElementById('qualityValue');
 
 
-const events = ['dragenter','dragover','dragleave','drop'];
+const events = ['dragenter','dragover','dragleave'];
 
 events.forEach(eventName=>{
- imageUploadZone.addEventListener(eventName, preventDefault, false);
+ imageUploadZone.addEventListener(eventName, handlePreventDefault, false);
 })
+
 
 
 function handlePreventDefault(e){
@@ -85,6 +87,7 @@ function handlePreventDefault(e){
     },false)
 })
 
+console.log(imageUploadZone);
 
 ['dragleave','drop'].forEach(eventName=>{
     imageUploadZone.addEventListener(eventName,()=>{
@@ -94,21 +97,102 @@ function handlePreventDefault(e){
 
 
 imageUploadZone.addEventListener('drop',(e)=>{
+    e.preventDefault();
     const file = Array.from(e.dataTransfer.files).filter(f=>f.type.startsWith('image/'));
     handleImageFiles(file);
 })
 
 imageUploadZone.addEventListener('click',()=>imageInput.click());
-imageInput.addEventListener('change',(e)=>{
+imageInput.addEventListener('change', (e)=>{
     const files = Array.from(e.target.files);
     handleImageFiles(files);
 });
 
+function handleImageFiles(files){
+    if(files.length == 0) return;
 
+    state.imageFiles = [...state.imageFiles,...files]
+    updateImagePreview();
+    imagePreview.classList.add('active');
+    imageContrls.style.display = 'flex';
+    showToast(`Added ${files.length} images(s)`,'success');
+}
 
+function updateImagePreview(){
+    imagePreviewList.innerHTML = state.imageFiles.map((file,idx)=>`
+    <div class="preview-item">
+        <img src="${URL.createObjectURL(file)}" class="preview-thumb" alt="${file.name}">
+        <div class="preview-info">
+            <div class="preview-name">${file.name}</div>
+            <div class="preview-size">${formatFileSize(file.size)}</div>
+        </div>
+        <button class="preview-remove" onclick="removeImage(${idx})">X</button>
+    </div>
+    `).join('')
+}
 
+window.removeImage = (index) =>{
+    state.imageFiles.splice(index,1);
+    showToast('Remove Image Successfully','error')
+    updateImagePreview();
+    if(state.imageFiles.length == 0){
+        imagePreview.classList.remove('active');
+        imageContrls.style.display = 'none';
+        document.getElementById('imageResults').classList.remove('active');
+    }
+}
 
+document.querySelectorAll('.image-converter .formate-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+        document.querySelectorAll('.image-converter .formate-btn').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        state.currentImageFormate = btn.dataset.format;
+    })
+})
 
+quantitySlider.addEventListener('input',e=>{
+    qualityValue.textContent = e.target.value + '%';
+})
 
+convertImageBtn.addEventListener('click', async()=>{
+    if(state.imageFiles.length == 0) return ;
+    setButtonLoading(convertImageBtn);
+    const progressContainer = document.getElementById('imageProgress');
+    const progressFill = document.getElementById('imageProgressFill');
+    const progressText = document.getElementById('imageProgressText');
+    const resultContainer = document.getElementById('imageResults');
+    const resultGrid = document.getElementById('imageResultGrid');
 
+    progressContainer.classList.add('active');
+    resultContainer.classList.remove('active');
+    state.converterImage = [];
+
+    for(let i = 0; i < state.imageFiles.length; i++){
+        const file = state.imageFiles[i];
+        const progress = (( 1 + i) / state.imageFiles.length) * 100;
+        progressFill.style.width = progress + '%';
+        progressText.textContent = `Converting...${Math.round(progress)}%`;
+
+        try {
+            const converted = await converterImage(file, state.currentImageFormate, quantitySlider.value/100);
+            state.converterImage.push(converted)
+        } catch (error) {
+            showToast(`Failed to convert ${file.name}`, 'error')
+        }
+
+    }
+    progressContainer.classList.remove('active');
+    setButtonLoading(convertImageBtn,false);
+
+    resultGrid.innerHTML = state.converterImage.map((img,index)=>`
+        <div class="result-item" onclick="dowloadConverterImage(${index})">
+            <img src="${img.url}" alt="Converter" >
+            <div class="result-overlay">${img.name}</div>
+        </div>
+    `).join('');
+
+    resultContainer.classList.add('active');
+    showToast('Conversion Completed Successfully','success');
+})
+})
 
