@@ -93,6 +93,16 @@ function handlePreventDefault(e){
 })
 
 
+imageUploadZone.addEventListener('drop',(e)=>{
+    const file = Array.from(e.dataTransfer.files).filter(f=>f.type.startsWith('image/'));
+    handleImageFiles(file);
+})
+
+imageUploadZone.addEventListener('click',()=>imageInput.click());
+imageInput.addEventListener('change',(e)=>{
+    const files = Array.from(e.target.files);
+    handleImageFiles(files);
+});
 
 
 
