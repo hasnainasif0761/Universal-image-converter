@@ -7,7 +7,7 @@
 :root
 {
     --primary-color: #32738c;
-    --secondary-color: #428dab17;
+    --secondary-color: #428dab24;
 }
 .navbar
 {
@@ -86,4 +86,12 @@
 {
     color: var(--primary-color);
     transition: all 0.5s ease;
+}
+.view_Conveter_Img
+{
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+    gap: 5px;
 }
