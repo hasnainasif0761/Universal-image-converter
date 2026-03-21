@@ -46,16 +46,15 @@
 }
 .card-1:nth-child(1)
 {
-    width: 85%;
+    width: 80%;
 }
 .card-1:nth-child(3)
 {
-    width: 87%;
+    width: 80%;
 }
 .card-1:nth-child(2)
 {
-    width: 117%;
-    background: red;
+    width: 125%;
 }
 .inner-card
 {
@@ -69,3 +68,22 @@
     background: #428dab17;
     box-shadow: 0px 3px 10px #428dab17;
 } 
+.drop-cont
+{
+    border-radius: 15px;
+    border: 2.5px dashed rgb(150, 149, 149);
+    transition: all 0.5s ease;
+    cursor: pointer;
+}
+.drop-cont:hover,
+.drop-cont.active
+{
+    border-color: var(--primary-color);
+    background: var(--secondary-color);
+}
+.drop-cont:hover .inner-drop .ri-upload-cloud-2-line,
+.drop-cont.active .inner-drop .ri-upload-cloud-2-line
+{
+    color: var(--primary-color);
+    transition: all 0.5s ease;
+}
