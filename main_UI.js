@@ -26,6 +26,26 @@ function checkConverterType () {
     }
 }
 
+// Loader For Button Click
+function btnLoaderFunc(btn, loading = 'true'){
+    if(loading){
+        btn.disable = true;
+        btn.dataset.originalText = btn.innerHTML
+        btn.innerHTML = '<div class="spinner"></div> Processing...'
+    }else
+    {
+        btn.disable = false;
+        btn.innerHTML = btn.dataset.originalText
+    }
+}
+
+
+
+
+
+
+
+
 // Human ReadAble Size Converter Formula 💥
 function formateFileSize(bytes){
     if(bytes.length == 0) return '0 Bytes';
@@ -42,7 +62,11 @@ const dropZone = document.getElementById('dropZone');
 const inputField = document.getElementById('inputField');
 const uploadImg = document.getElementById('uploadImg');
 const view_Conveter_Img = document.querySelector('.view_Conveter_Img');
+const btnConvert = document.getElementById('btnConvert');
 
+btnConvert.addEventListener('click',()=>{
+    btnLoaderFunc(btnConvert)
+})
 // console.log(dropZone);
 
 ['dragover', 'dragenter', 'dragleave', 'drop'].forEach((eventName) => {
@@ -92,7 +116,11 @@ function handleImageFile(file){
 }
 
 function updateImagePreview(){
-    view_Conveter_Img.innerHTML = state.imageFiles.map((file,idx)=>`
+    if(state.imageFiles.length == 0){
+        view_Conveter_Img.innerHTML = `<p>Empty File List</p>`
+    }else
+    {
+        view_Conveter_Img.innerHTML = state.imageFiles.map((file,idx)=>`
     <div class="w-[96%] h-auto border flex ml-2 relative px-2 py-1 rounded-[5px]">
     <img src="${URL.createObjectURL(file)}" class="block w-[40px] h-[50px] rounded-[10px]">
     
@@ -103,13 +131,13 @@ function updateImagePreview(){
         <i class="ri-close-line text-xl absolute top-3 right-2 bg-red-300 px-1 rounded-[10px] hover:bg-red-400 cursor-pointer transition-all duration-500 hover:rotate-[90deg]" onclick="removeFileFunc(${idx})"></i>
         </div>
     `).join('');
+    }
 }
 
 function removeFileFunc(id){
     state.imageFiles.splice(id,1);
     updateImagePreview()
 }
-
 
 
 

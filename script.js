@@ -43,7 +43,7 @@ function formatFileSize(bytes){
     return (bytes / Math.pow(k,i)).toFixed(2) + '' + size[i]
 }
 
-function setButtonLoading(btn, loading = 'true'){
+function setButtonLoading(btn, loading = true){
     if(loading){
         btn.disabled = true;
         btn.classList.add('processing');
@@ -87,7 +87,6 @@ function handlePreventDefault(e){
     },false)
 })
 
-console.log(imageUploadZone);
 
 ['dragleave','drop'].forEach(eventName=>{
     imageUploadZone.addEventListener(eventName,()=>{
