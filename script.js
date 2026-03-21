@@ -68,9 +68,7 @@ const quantitySlider = document.getElementById('qualitySlider');
 const qualityValue = document.getElementById('qualityValue');
 
 
-const events = ['dragenter','dragover','dragleave'];
-
-events.forEach(eventName=>{
+['dragenter','dragover','dragleave'].forEach(eventName=>{
  imageUploadZone.addEventListener(eventName, handlePreventDefault, false);
 })
 
@@ -163,7 +161,7 @@ convertImageBtn.addEventListener('click', async()=>{
     const resultGrid = document.getElementById('imageResultGrid');
 
     progressContainer.classList.add('active');
-    resultContainer.classList.remove('active');
+    resultContainer.classList.add('active');
     state.converterImage = [];
 
     for(let i = 0; i < state.imageFiles.length; i++){
